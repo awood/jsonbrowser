@@ -104,6 +104,8 @@ def build_tree(data, tree):
             elif type(v) is list:
                 tree.append({"name" : "%s []" % i, "children" : []})
                 build_tree(v, tree[-1]["children"])
+            else:
+                tree.append({"name" : "%s : %s" % (i, v)})
 
     return tree
 

@@ -86,14 +86,24 @@ class JsonTreeBrowser:
 
 
 def build_tree(data, tree):
-    for k, v in data.iteritems():
-        if type(v) is dict:
-            tree.append({"name" : "%s {}" % k, "children" : []})
-            build_tree(v, tree[-1]["children"])
-        elif type(v) is list:
-            pass
-        else:
-            tree.append({"name" : "%s : %s" % (k, v)})
+    if type(data) is dict:
+        for k, v in data.iteritems():
+            if type(v) is dict:
+                tree.append({"name" : "%s {}" % k, "children" : []})
+                build_tree(v, tree[-1]["children"])
+            elif type(v) is list:
+                tree.append({"name" : "%s []" % k, "children" : []})
+                build_tree(v, tree[-1]["children"])
+            else:
+                tree.append({"name" : "%s : %s" % (k, v)})
+    elif type(data) is list:
+        for i, v in enumerate(data):
+            if type(v) is dict:
+                tree.append({"name" : "%s {}" % i, "children" : []})
+                build_tree(v, tree[-1]["children"])
+            elif type(v) is list:
+                tree.append({"name" : "%s []" % i, "children" : []})
+                build_tree(v, tree[-1]["children"])
 
     return tree
 

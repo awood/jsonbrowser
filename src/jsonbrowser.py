@@ -2,8 +2,8 @@
 
 import urwid
 import sys
-import os
 import simplejson as json
+from collections import OrderedDict
 
 class JsonTreeWidget(urwid.TreeWidget):
     """ Display widget for leaf nodes """
@@ -86,9 +86,9 @@ class JsonTreeBrowser:
 
 
 def build_tree(data, tree):
-    if type(data) is dict:
+    if type(data) is OrderedDict:
         for k, v in data.iteritems():
-            if type(v) is dict:
+            if type(v) is OrderedDict:
                 tree.append({"name" : "%s {}" % k, "children" : []})
                 build_tree(v, tree[-1]["children"])
             elif type(v) is list:
@@ -98,7 +98,7 @@ def build_tree(data, tree):
                 tree.append({"name" : "%s : %s" % (k, v)})
     elif type(data) is list:
         for i, v in enumerate(data):
-            if type(v) is dict:
+            if type(v) is OrderedDict:
                 tree.append({"name" : "%s {}" % i, "children" : []})
                 build_tree(v, tree[-1]["children"])
             elif type(v) is list:
@@ -109,7 +109,7 @@ def build_tree(data, tree):
 
 def load_json(json_file):
     fp = open(json_file)
-    return json.load(fp)
+    return json.load(fp, object_pairs_hook=OrderedDict)
 
 def main():
     if len(sys.argv) != 2:

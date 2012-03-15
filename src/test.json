@@ -1,0 +1,23 @@
+{
+    "content": [
+        {
+            "name": "never-enabled-content",
+            "id": 0,
+            "label": "never-enabled-content",
+            "type": "yum",
+            "vendor": "test-vendor",
+            "content_url": "/foo/path/never",
+            "gpg_url": "/foo/path/never/gpg",
+            "metadata_expire": 600
+        },
+        {
+            "name": "always-enabled-content",
+            "id": 1,
+            "label": "always-enabled-content",
+            "type": "yum",
+            "vendor": "test-vendor",
+            "content_url": "/foo/path/always",
+            "gpg_url": "/foo/path/always/gpg",
+            "metadata_expire": 200
+        }]
+}

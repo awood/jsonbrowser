@@ -35,21 +35,21 @@ class JsonTreeView(object):
         if type(data) is OrderedDict:
             for k, v in data.iteritems():
                 if type(v) is OrderedDict:
-                    parent = treestore.append(parent, ["%s {}" % k])
-                    self.buildTreeStore(v, treestore, parent)
+                    p = treestore.append(parent, ["%s {}" % k])
+                    self.buildTreeStore(v, treestore, p)
                 elif type(v) is list:
-                    parent = treestore.append(parent, ["%s []" % k])
-                    self.buildTreeStore(v, treestore, parent)
+                    p = treestore.append(parent, ["%s []" % k])
+                    self.buildTreeStore(v, treestore, p)
                 else:
                     treestore.append(parent, ["%s : %s" % (k, v)])
         elif type(data) is list:
             for i, v in enumerate(data):
                 if type(v) is OrderedDict:
-                    parent = treestore.append(parent, ["%s {}" % i])
-                    self.buildTreeStore(v, treestore, parent)
+                    p = treestore.append(parent, ["%s {}" % i])
+                    self.buildTreeStore(v, treestore, p)
                 elif type(v) is list:
-                    parent = treestore.append(parent, ["%s []" % i])
-                    self.buildTreeStore(v, treestore, parent)
+                    p = treestore.append(parent, ["%s []" % i])
+                    self.buildTreeStore(v, treestore, p)
                 else:
                     treestore.append(parent, ["%s : %s" % (i, v)])
 

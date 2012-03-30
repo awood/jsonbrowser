@@ -9,16 +9,22 @@ from collections import OrderedDict
 
 class JsonTreeView(object):
     def __init__(self, json):
-        self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
-        self.window.set_title("JSON Browser")
-        self.window.set_size_request(400, 600)
-        self.window.connect("delete_event", self.delete_event)
+        window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        window.set_title("JSON Browser")
+        window.set_size_request(400, 600)
+        window.connect("delete_event", self.delete_event)
+
+        scrolled_window = gtk.ScrolledWindow()
+        scrolled_window.set_border_width(10)
+        scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        window.add(scrolled_window)
 
         treestore = gtk.TreeStore(str)
         treestore = self.buildTreeStore(json, treestore, None)
         treeview = self.buildTreeView(treestore)
-        self.window.add(treeview)
-        self.window.show_all()
+        scrolled_window.add(treeview)
+
+        window.show_all()
 
     def buildTreeView(self, treestore):
         treeview = gtk.TreeView(treestore)
